@@ -5,7 +5,9 @@ import App from './components/app/app';
 // import { Header } from './App';
 
 
-// const elem = React.createElement('h2', {className: 'greet'}, 'Привет!!');
+// const elem = React.createElement('h2', {className: 'red'}, 'Привет!!')
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render( // стрикт мод - проверят на актуальность, строгий режим
@@ -13,5 +15,3 @@ root.render( // стрикт мод - проверят на актуальнос
       <App/>
   </StrictMode>
 );
-
-

@@ -24,7 +24,7 @@ function App() {
             <WhoAmI name='Petia' surname ='Petrov' link = 'site.com' /> */}
 
 
-            <AppInfo/>
+            <AppInfo data={data}/>
             
 
             <div className='search-panel'>
