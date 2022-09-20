@@ -8,6 +8,8 @@ class EmpoyersListItem extends Component {
             increase: false,
             like: false
         }
+
+        // const d = {name: 'Вася В.', salary: 15000, increase: false, id: 4}
     }
 
     onIncrease = () => {
@@ -23,7 +25,8 @@ class EmpoyersListItem extends Component {
     }
 
     render() {
-        const {name, salary} = this.props;
+        const {name, salary, onDelete} = this.props;
+        // const {name, salary} = this.d;
         const {increase, like} = this.state;
 
         let classNames = 'list-group-item d-flex justify-content-between';
@@ -46,7 +49,8 @@ class EmpoyersListItem extends Component {
                     </button>
 
                     <button type="button"
-                            className="btn-trash btn-sm ">
+                            className="btn-trash btn-sm "
+                            onClick={onDelete}>
                         <i className="fas fa-trash"></i>
                     </button>
                     <i className="fas fa-star"></i>
