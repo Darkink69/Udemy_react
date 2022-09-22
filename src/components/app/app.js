@@ -5,7 +5,9 @@ import SearchPanel from '../search-panel/search-panel';
 import AppFilter from '../app-filter/app-filter';
 import EmployersList from '../employers-list/employers-list';
 import EmployersAddForm from '../employers-add-form/employers-add-form'
+import Test from '../test/test';
 // import WhoAmI from '../whoImI';
+// import styled from 'styled-components'
 
 import './app.css';
 
@@ -21,10 +23,13 @@ class App extends Component {
                 {name: 'Петя П.', salary: 50000, increase: false, like: false, id: 3},
                 {name: 'Вася В.', salary: 15000, increase: false, like: false, id: 4}
                 
-            ]
+            ],
+            term: '',
+            filter: 'all'
         }
         this.maxId = 5;
     }
+
 
     deleteItem = (id) => {
         this.setState(({data}) => {
@@ -83,25 +88,66 @@ class App extends Component {
         }))
     }
 
+    searchEmp = (items, term) => {
+        if (term.length === 0) {
+            return items;
+        }
+
+        return items.filter(item => {
+            return item.name.indexOf(term) > -1
+        })
+    }
+
+    onUpdateSearch = (term) => {
+        this.setState({term});
+    }
+
+    filterPost = (items, filter) => {
+        switch (filter) {
+            case 'rise':
+                return items.filter(item => item.increase);
+            case 'like':
+                return items.filter(item => item.like);    
+            case 'more50' :
+                return items.filter(item => item.salary > 50000);
+            default:
+                return items
+        }
+        
+    }
+
+    onFilterSelect = (filter) => {
+        this.setState({filter})
+    }
 
 
     render() {
+        const {data, term, filter} = this.state;
         const increased = this.state.data.filter(item => item.increase).length;
+        const visibleData = this.filterPost(this.searchEmp(data, term), filter);
+
+        // const Wrapper = styled.div`
+        //     width: 600px;
+        //     margin: 80px auto 0 auto
+        // `;
+
         return (
             <div className="app">
-                {/* <WhoAmI name='Vasia' surname ='Ivanov' link = 'site.com' />
-                <WhoAmI name='Petia' surname ='Petrov' link = 'site.com' /> */}
+                {/* <Wrapper>
+                    <WhoAmI name='Vasia' surname ='Ivanov' link = 'site.com' />
+                    <WhoAmI name='Petia' surname ='Petrov' link = 'site.com' />
+                </Wrapper> */}
                     
                 <AppInfo data={this.state.data} increased={increased}/>
                 
     
                 <div className='search-panel'>
-                    <SearchPanel/>
-                    <AppFilter/>
+                    <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
+                    <AppFilter filter={filter} onFilterSelect={this.onFilterSelect}/>
                 </div>
     
                 <EmployersList 
-                data={this.state.data} 
+                data={visibleData} 
                 onDelete={this.deleteItem}
                 onToggleIncrease={this.onToggleIncrease}
                 onToggleRise={this.onToggleRise}/>
@@ -109,6 +155,8 @@ class App extends Component {
                 <EmployersAddForm
                 data={this.state.data} 
                 onAdd={this.addItem}/>
+
+                <Test data={this.state.data}/>
             </div>
             
         )
