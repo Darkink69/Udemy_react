@@ -8,6 +8,7 @@ import EmployersAddForm from '../employers-add-form/employers-add-form'
 import Test from '../test/test';
 // import WhoAmI from '../whoImI';
 // import styled from 'styled-components'
+import BootstrapTest from '../test/bootstrap-Components';
 
 import './app.css';
 
@@ -120,6 +121,12 @@ class App extends Component {
         this.setState({filter})
     }
 
+    static Log = () => {
+        console.log('Wow!')
+    }
+
+    static logged = 'on'
+
 
     render() {
         const {data, term, filter} = this.state;
@@ -157,6 +164,7 @@ class App extends Component {
                 onAdd={this.addItem}/>
 
                 <Test data={this.state.data}/>
+                <BootstrapTest data={visibleData}/>
             </div>
             
         )
@@ -165,5 +173,7 @@ class App extends Component {
    
 }
 
+App.Log()
+console.log(App.logged)
 
 export default App;
